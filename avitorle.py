@@ -64,8 +64,8 @@ def processimagebuffer(imgbuffer, f):
             smallruns.extend([run[1]]*run[0])
     return output
 
-for i in xrange(0, int(cv.GetCaptureProperty(capture, cv.CV_CAP_PROP_FRAME_COUNT)),2):
-#for i in xrange(0,35):
+for i in xrange(0, int(cv.GetCaptureProperty(capture, cv.CV_CAP_PROP_FRAME_COUNT))):
+#for i in xrange(0,35): 
     frame = cv.QueryFrame(capture)
     cv.Resize(frame,resizedframe,cv.CV_INTER_NN)
     cv.CvtColor(resizedframe,bwframe,cv.CV_RGB2GRAY)
@@ -78,6 +78,8 @@ for i in xrange(0, int(cv.GetCaptureProperty(capture, cv.CV_CAP_PROP_FRAME_COUNT
     print i
     for y in xrange(newheight):
         for x in xrange(newwidth):
+            value = int(mat[y,x])
+            value = int(value/16) * 16
             imagebuffer[offset]=int(mat[y,x])
             offset+=1
     with open(outputpath + str(i).zfill(4) + '.rle','wb') as f:
